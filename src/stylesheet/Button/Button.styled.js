@@ -34,4 +34,10 @@ export const ButtonStyled = styled.button`
         background-color: #2f2a66;
       }
     `}
+
+  ${(props) =>
+    props.w100 &&
+    css`
+      width: 100%;
+    `}
 `;

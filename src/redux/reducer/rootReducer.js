@@ -1,13 +1,18 @@
 import { combineReducers } from 'redux';
 import { AppReducer } from 'App/reducer/App.reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { AuthenticationReducer } from 'modules/auth/reducers/authenticationReducer';
 
-const appReducer = combineReducers({
+const appReducer = configureStore({
   /* your app’s top-level reducers */
-  app: AppReducer
+  reducer: {
+    app: AppReducer,
+    auth: AuthenticationReducer
+  }
 });
 
-const rootReducer = (state, action) => {
-  return appReducer(state, action);
+const rootReducer = () => {
+  return appReducer;
 };
 
 export default rootReducer;

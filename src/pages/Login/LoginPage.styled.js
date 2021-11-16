@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
 
 export const LoginPageWrapper = styled.div`
-  padding-top: 20vh;
+  padding-top: 25vh;
   padding-bottom: 5vh;
+
   display: flex;
   flex-direction: column;
   padding-right: 1.25rem;

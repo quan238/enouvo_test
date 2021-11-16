@@ -10,7 +10,7 @@ export const store = configureStore();
 function PrivateTemplate(props) {
   const { Component, ...restRoute } = props;
   // const { isAuthenticated } = useSelector((state) => state.auth);
-  const isAuthenticated = true;
+  const isAuthenticated = useSelector((state) => state.auth);
 
   return (
     <Route

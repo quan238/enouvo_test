@@ -5,6 +5,9 @@ import PrivateTemplate from '../template/Private/PrivateTemplate';
 import LoginTemplate from '../template/Login/LoginTemplate';
 import { Router, Switch } from 'react-router-dom';
 
+// styled
+import 'antd/dist/antd.css';
+
 export const history = createBrowserHistory();
 
 const Components = [

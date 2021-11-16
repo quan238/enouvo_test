@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import { IllustrationTheme, LoginTemplateStyled } from './LoginTemplate';
+import { IllustrationTheme, LoginContentStyled, LoginTemplateStyled } from './LoginTemplate.styled';
 
 export default function LoginTemplate(props) {
   // es6
@@ -12,9 +12,9 @@ export default function LoginTemplate(props) {
       render={(propsRoute) => {
         return (
           <LoginTemplateStyled>
-            <div style={{ width: '50%' }}>
+            <LoginContentStyled>
               <Component {...propsRoute} />
-            </div>
+            </LoginContentStyled>
             <IllustrationTheme />
           </LoginTemplateStyled>
         );

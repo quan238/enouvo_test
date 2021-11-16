@@ -13,6 +13,14 @@ export const LoginTemplateStyled = styled.div`
   height: 100%;
 `;
 
+export const LoginContentStyled = styled.div`
+  width: 50%;
+
+  @media screen and (max-width: 39.9375em) {
+    width: 100%;
+  }
+`;
+
 export const IllustrationTheme = styled.div`
   background: linear-gradient(138.49deg, #593b79 0%, rgba(44, 41, 93, 0.99) 100%);
   position: relative;

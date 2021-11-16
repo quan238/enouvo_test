@@ -1,10 +1,11 @@
-const initialState = {
-  isAuthenticated: false
-};
+import { createSlice } from '@reduxjs/toolkit';
 
-export const AppReducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+const initialState = {};
+
+const appSlice = createSlice({
+  name: 'appReducer',
+  initialState,
+  reducers: {}
+});
+
+export const AppReducer = appSlice.reducer;
