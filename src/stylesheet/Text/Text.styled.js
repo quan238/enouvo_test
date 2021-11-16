@@ -8,6 +8,12 @@ export const TextSpan = styled.span`
     css`
       color: #f85359;
     `}
+
+  ${(props) =>
+    props.ml &&
+    css`
+      margin-left: 10px;
+    `}
 `;
 
 export const TextP = styled.p`

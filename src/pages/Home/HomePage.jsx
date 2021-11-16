@@ -1,5 +1,10 @@
-import React from "react";
+import ListContainer from 'modules/list/container/ListContainer';
+import React from 'react';
 
 export default function HomePage() {
-  return <div></div>;
+  return (
+    <>
+      <ListContainer />
+    </>
+  );
 }

@@ -17,10 +17,15 @@ const authenticationSlice = createSlice({
     loginUserSuccess: (state) => {
       state.isAuthenticated = false;
       state.isFetching = true;
+    },
+    logoutUserSuccess: (state) => {
+      state.isAuthenticated = false;
+      state.isFetching = false;
     }
   }
 });
 
-export const { loginUserRequest, loginUserSuccess } = authenticationSlice.actions;
+export const { loginUserRequest, loginUserSuccess, logoutUserSuccess } =
+  authenticationSlice.actions;
 
 export const AuthenticationReducer = authenticationSlice.reducer;

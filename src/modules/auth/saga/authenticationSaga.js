@@ -3,7 +3,7 @@ import { API } from 'apis';
 import { history } from 'App/App';
 import { Message } from 'utils/Message';
 import { errorNotification, getError, successNotification } from 'utils/Notifcation';
-import { LOGIN_USER } from '../actions/loginAction';
+import { LOGIN_USER, LOGOUT_USER } from '../actions/loginAction';
 
 function setAccessToken(accessToken) {
   //   const expiresAt = moment(authResult.expiration).valueOf()
@@ -11,6 +11,16 @@ function setAccessToken(accessToken) {
   sessionStorage.setItem('accessToken', accessToken);
 
   const loggedIn = 'true';
+  localStorage.setItem('logged-in', loggedIn);
+  sessionStorage.setItem('logged-in', loggedIn);
+}
+
+function removeAccessToken() {
+  localStorage.removeItem('accessToken');
+
+  sessionStorage.removeItem('accessToken');
+
+  const loggedIn = 'false';
   localStorage.setItem('logged-in', loggedIn);
   sessionStorage.setItem('logged-in', loggedIn);
 }
@@ -46,10 +56,24 @@ function* loginUser({ payload }) {
   }
 }
 
+function* logoutUser({ payload: goToLogin }) {
+  try {
+    removeAccessToken();
+    goToLogin();
+    successNotification(Message.logoutSuccess);
+  } catch (error) {
+    errorNotification(getError(error));
+  }
+}
+
 function* watchLoginUser() {
   yield takeLatest(LOGIN_USER, loginUser);
 }
 
+function* watchLogoutUser() {
+  yield takeLatest(LOGOUT_USER, logoutUser);
+}
+
 export default function* authSaga() {
-  yield all([watchLoginUser()]);
+  yield all([watchLoginUser(), watchLogoutUser()]);
 }
