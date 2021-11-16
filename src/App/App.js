@@ -1,8 +1,8 @@
-import './App.css';
+import './App.scss';
 import { createBrowserHistory } from 'history';
 import { routes } from '../routes/routes';
-import PrivateTemplate from '../template/PrivateTemplate';
-import LoginTemplate from '../template/LoginTemplate';
+import PrivateTemplate from '../template/Private/PrivateTemplate';
+import LoginTemplate from '../template/Login/LoginTemplate';
 import { Router, Switch } from 'react-router-dom';
 
 export const history = createBrowserHistory();
