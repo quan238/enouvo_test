@@ -1,10 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { isObject, map, flatten } from 'underscore';
-import { BASE_URL } from './const';
+import { API_VERSION_1, API_VERSION_2, API_VERSION_NONE, BASE_URL } from './const';
 // import { getAccessToken } from '@/modules/authentication/saga/authenticationSaga';
-
+import accountAPI from './auth/auth';
+import { getAccessToken } from 'modules/auth/saga/authenticationSaga';
 // axios.defaults.params = axios.defaults.params || { culture: "en" }
 axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 axios.interceptors.request.use((_config) => {
   //   if (loggedIn() && !checkAuthenticate()) {
@@ -16,7 +18,17 @@ axios.interceptors.request.use((_config) => {
 
   config.headers.Authorization = `Bearer ${accessToken}`;
 
-  const endPoint = BASE_URL;
+  let endPoint = '';
+
+  switch (config.apiVersion) {
+    case API_VERSION_2:
+    case API_VERSION_NONE:
+      endPoint = BASE_URL.slice(0, BASE_URL.lastIndexOf('/'));
+      break;
+    default:
+      endPoint = BASE_URL + API_VERSION_1;
+      break;
+  }
 
   if (!config.absoluteUrl) {
     config.url = endPoint + config.url;
@@ -49,4 +61,4 @@ export function getErrorMessage(error) {
   return message;
 }
 
-export const API = {};
+export const API = { accountAPI };

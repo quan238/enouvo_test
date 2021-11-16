@@ -9,7 +9,18 @@ const initialState = {
 const authenticationSlice = createSlice({
   name: 'authenticationSlice',
   initialState,
-  reducers: {}
+  reducers: {
+    loginUserRequest: (state) => {
+      state.isAuthenticated = false;
+      state.isFetching = true;
+    },
+    loginUserSuccess: (state) => {
+      state.isAuthenticated = false;
+      state.isFetching = true;
+    }
+  }
 });
+
+export const { loginUserRequest, loginUserSuccess } = authenticationSlice.actions;
 
 export const AuthenticationReducer = authenticationSlice.reducer;

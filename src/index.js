@@ -6,22 +6,15 @@ import reportWebVitals from './reportWebVitals';
 
 // redux
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
-
-// root Saga
-import rootSaga from './redux/saga/rootSaga';
+import store from './redux/reducer/rootReducer';
 
 // redux persit
-import { persistor, sagaMiddleware } from './redux/store';
+import { persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-
-sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <App />
-    </PersistGate>
+    <App />
   </Provider>,
   document.getElementById('root')
 );

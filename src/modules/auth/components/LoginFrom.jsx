@@ -6,6 +6,7 @@ import { ButtonStyled } from 'stylesheet/Button/Button.styled';
 import { FormGroup, InputAntd } from 'stylesheet/Input/Input.styled';
 import { TextSpan } from 'stylesheet/Text/Text.styled';
 import * as Yup from 'yup';
+import { LOGIN_USER } from '../actions/loginAction';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
@@ -15,12 +16,16 @@ const LoginSchema = Yup.object().shape({
 export default function LoginFrom() {
   const dispatch = useDispatch();
 
+  const onLogin = (values) => {
+    dispatch({ type: LOGIN_USER, payload: values });
+  };
+
   return (
     <div>
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
+          onLogin(values);
           resetForm();
         }}
         validationSchema={LoginSchema}>
@@ -30,7 +35,13 @@ export default function LoginFrom() {
               <Field name="email">
                 {({ field, form: { touched, errors } }) => (
                   <>
-                    <InputAntd placeholder="Email" name="email" type="text" {...field} />
+                    <InputAntd
+                      error={errors.email && touched.email ? true : false}
+                      placeholder="Email"
+                      name="email"
+                      type="text"
+                      {...field}
+                    />
                     {errors.email && touched.email ? (
                       <TextSpan error>{errors.email}</TextSpan>
                     ) : null}
@@ -42,7 +53,13 @@ export default function LoginFrom() {
               <Field name="password">
                 {({ field, form: { touched, errors } }) => (
                   <>
-                    <InputAntd placeholder="password" name="password" type="password" {...field} />
+                    <InputAntd
+                      error={errors.email && touched.email ? true : false}
+                      placeholder="password"
+                      name="password"
+                      type="password"
+                      {...field}
+                    />
                     {errors.password && touched.password ? (
                       <TextSpan error>{errors.password}</TextSpan>
                     ) : null}

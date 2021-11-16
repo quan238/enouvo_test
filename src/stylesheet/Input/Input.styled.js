@@ -23,4 +23,15 @@ export const InputAntd = styled(Input)`
   transition: border-color 0.2s ease-in-out;
   width: 100%;
   box-shadow: none;
+
+  ${(props) =>
+    props.error &&
+    css`
+      border-color: #f85359 !important;
+      &:hover,
+      &:focus,
+      &:active {
+        border-color: #f85359 !important;
+      }
+    `}
 `;
