@@ -1,7 +1,7 @@
 /* eslint-disable react/function-component-definition */
 import { Col, Row } from 'antd';
 import { useRouter } from 'hooks/useRouter';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import listDetailAction from '../actions/detailActions';
 import ContactInfo from '../components/ContactInfo/ContactInfo';
@@ -15,7 +15,7 @@ export default function DetailContainer() {
   const { id } = router.query;
 
   const {
-    detail: { name, description, city, phoneNumber, address, vehicles }
+    detail: { name, description, city, phoneNumber, address, isFetching, vehicles, id: idStore }
   } = useSelector((state) => state.detail);
 
   const onDispatchFetchDetailStore = () => {
@@ -31,14 +31,19 @@ export default function DetailContainer() {
       <Row>
         <Col span={6}>
           <Row>
-            <GeneralInfo name={name} description={description} />
+            <GeneralInfo name={name} description={description} loading={isFetching} />
           </Row>
           <Row style={{ paddingTop: '25px' }}>
-            <ContactInfo city={city} phoneNumber={phoneNumber} address={address} />
+            <ContactInfo
+              city={city}
+              phoneNumber={phoneNumber}
+              address={address}
+              loading={isFetching}
+            />
           </Row>
         </Col>
         <Col span={18} style={{ padding: '0 25px' }}>
-          <VehicleTable data={vehicles} />
+          <VehicleTable data={vehicles} loading={isFetching} />
         </Col>
       </Row>
     </div>

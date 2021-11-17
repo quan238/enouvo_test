@@ -274,7 +274,7 @@ const ListTable = function () {
           return {
             onClick: (event) => {
               const { id } = data[rowIndex];
-              history.push(`/vehicle/${id}`);
+              history.push(`/store/${id}`);
             } // click row
           };
         }}

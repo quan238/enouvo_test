@@ -7,9 +7,10 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 
 const { Meta } = Card;
 
-export default function GeneralInfo({ name, description }) {
+export default function GeneralInfo({ name, description, loading }) {
   return (
     <Card
+      loading={loading}
       style={{ width: '100%' }}
       title="General"
       extra={<a href="#">More</a>}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 
 const EditableCell = function ({
@@ -35,10 +35,16 @@ const EditableCell = function ({
   );
 };
 
-const VehicleTable = function ({ data: originData }) {
+const VehicleTable = function ({ data: originData, loading }) {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');
+
+  useEffect(() => {
+    if (originData.length !== 0) {
+      setData(originData);
+    }
+  }, [originData]);
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -79,17 +85,17 @@ const VehicleTable = function ({ data: originData }) {
 
   const columns = [
     {
-      title: 'name',
+      title: 'Vehicle Name',
       dataIndex: 'name',
       width: '25%'
     },
     {
-      title: 'vehicleNumber',
+      title: 'Serial',
       dataIndex: 'vehicleNumber',
       width: '25%'
     },
     {
-      title: 'price',
+      title: 'Price',
       dataIndex: 'price',
       width: '35%',
       editable: true
@@ -140,6 +146,7 @@ const VehicleTable = function ({ data: originData }) {
   return (
     <Form form={form} component={false}>
       <Table
+        loading={loading}
         components={{
           body: {
             cell: EditableCell

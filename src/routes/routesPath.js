@@ -7,8 +7,8 @@ const ROUTE_PATH = [
   },
   {
     title: 'Detail',
-    path: '/vehicle/:id',
-    subTitle: 'This is detail page'
+    path: '/store/:id',
+    subTitle: 'This is store page'
   }
 ];
 
