@@ -1,9 +1,10 @@
-import { all, call, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import { API } from 'apis';
 import { history } from 'App/App';
 import { Message } from 'utils/Message';
 import { errorNotification, getError, successNotification } from 'utils/Notifcation';
 import { LOGIN_USER, LOGOUT_USER } from '../actions/loginAction';
+import { loginUserRequest, loginUserSuccess } from '../reducers/authenticationReducer';
 
 function setAccessToken(accessToken) {
   //   const expiresAt = moment(authResult.expiration).valueOf()
@@ -44,13 +45,18 @@ export function changeRoute() {
 
 function* loginUser({ payload }) {
   try {
+    yield put(loginUserRequest());
     const { data } = yield call(API.accountAPI.loginUser, payload);
     if (data) {
       const { token } = data;
       setAccessToken(token);
     }
-    changeRoute();
+
+    yield put(loginUserSuccess());
+
     successNotification(Message.loginSuccess);
+
+    changeRoute();
   } catch (error) {
     errorNotification(getError(error));
   }

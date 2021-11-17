@@ -9,10 +9,10 @@ import { LayoutStyled, ContentStyled } from 'stylesheet/Layout/Layout.styled';
 
 export const store = configureStore();
 
-function PrivateTemplate(props) {
+const PrivateTemplate = function (props) {
   const { Component, ...restRoute } = props;
   // const { isAuthenticated } = useSelector((state) => state.auth);
-  const isAuthenticated = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <Route
@@ -31,6 +31,6 @@ function PrivateTemplate(props) {
       }}
     />
   );
-}
+};
 
 export default PrivateTemplate;

@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
-const originData = [];
+import listAction from 'modules/list/actions/listAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { SORT } from 'utils/ENUM';
 
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`
-  });
-}
-
-const EditableCell = ({
+const EditableCell = function ({
   editing,
   dataIndex,
   title,
@@ -21,7 +14,7 @@ const EditableCell = ({
   index,
   children,
   ...restProps
-}) => {
+}) {
   const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
   return (
     <td {...restProps}>
@@ -46,10 +39,44 @@ const EditableCell = ({
   );
 };
 
-const ListTable = () => {
+const ListTable = function () {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [tableChange, setTableChange] = useState({
+    page: 1,
+    orderBy: 'name',
+    order: SORT.ASC
+  });
+
+  const dispatch = useDispatch();
+
+  const handleTableChange = ({ current }) => {
+    setTableChange({ page: current });
+  };
+
+  const fetchStoreList = () => {
+    dispatch({
+      type: listAction.FETCH_STORE_LIST,
+      payload: {
+        page: tableChange.page,
+        orderBy: tableChange.orderBy
+      }
+    });
+  };
+
+  const { data: dataStore, total, isFetching } = useSelector((state) => state.list.list);
+
+  useEffect(() => {
+    fetchStoreList();
+  }, [tableChange]);
+
+  useEffect(() => {
+    if (dataStore) {
+      setData(dataStore);
+    }
+  }, [dataStore]);
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -90,25 +117,69 @@ const ListTable = () => {
 
   const columns = [
     {
-      title: 'name',
+      title: 'Name',
       dataIndex: 'name',
-      width: '25%',
+      width: '18%',
+      sorter: true,
+      onHeaderCell: ({ dataIndex }) => {
+        return {
+          onClick: () => {
+            setTableChange({ orderBy: dataIndex });
+          }
+        };
+      },
       editable: true
     },
     {
-      title: 'age',
-      dataIndex: 'age',
+      title: 'City',
+      dataIndex: 'city',
       width: '15%',
-      editable: true
+      sorter: true,
+      editable: true,
+      onHeaderCell: ({ dataIndex }) => {
+        return {
+          onClick: () => {
+            setTableChange({ orderBy: dataIndex });
+          }
+        };
+      }
     },
     {
-      title: 'address',
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      width: '10%',
+      sorter: true,
+      editable: true,
+      onHeaderCell: ({ dataIndex }) => {
+        return {
+          onClick: () => {
+            setTableChange({ orderBy: dataIndex });
+          }
+        };
+      }
+    },
+    {
+      title: 'Address',
       dataIndex: 'address',
-      width: '40%',
+      width: '25%',
+      sorter: true,
+      editable: true,
+      onHeaderCell: ({ dataIndex }) => {
+        return {
+          onClick: () => {
+            setTableChange({ orderBy: dataIndex });
+          }
+        };
+      }
+    },
+    {
+      title: 'Thumbnail',
+      dataIndex: 'thumbnail',
+      width: '20%',
       editable: true
     },
     {
-      title: 'operation',
+      title: 'Edit',
       dataIndex: 'operation',
       render: (_, record) => {
         const editable = isEditing(record);
@@ -134,6 +205,7 @@ const ListTable = () => {
       }
     }
   ];
+
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
@@ -150,9 +222,53 @@ const ListTable = () => {
       })
     };
   });
+
+  const onSelectChange = (rowKey) => {
+    setSelectedRowKeys(rowKey);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+      {
+        key: 'odd',
+        text: 'Select Odd Row',
+        onSelect: (changableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+            if (index % 2 !== 0) {
+              return false;
+            }
+            return true;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        }
+      },
+      {
+        key: 'even',
+        text: 'Select Even Row',
+        onSelect: (changableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+            if (index % 2 !== 0) {
+              return true;
+            }
+            return false;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        }
+      }
+    ]
+  };
+
   return (
     <Form form={form} component={false}>
       <Table
+        rowSelection={rowSelection}
         components={{
           body: {
             cell: EditableCell
@@ -162,9 +278,9 @@ const ListTable = () => {
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"
-        pagination={{
-          onChange: cancel
-        }}
+        loading={isFetching}
+        pagination={{ ...tableChange.page, total }}
+        onChange={handleTableChange}
       />
     </Form>
   );

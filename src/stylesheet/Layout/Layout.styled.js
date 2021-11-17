@@ -7,7 +7,7 @@ export const LayoutStyled = styled(Layout)`
   height: 100%;
 `;
 export const ContentStyled = styled(Content)`
-  padding: 55px;
+  padding: 100px 55px;
 `;
 export const HeaderStyled = styled(Header)`
   background: #fff;

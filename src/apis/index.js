@@ -1,13 +1,19 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { isObject, map, flatten } from 'underscore';
+import { getAccessToken } from 'modules/auth/saga/authenticationSaga';
+import qs from 'qs';
 import { API_VERSION_1, API_VERSION_2, API_VERSION_NONE, BASE_URL } from './const';
 // import { getAccessToken } from '@/modules/authentication/saga/authenticationSaga';
 import accountAPI from './auth/auth';
-import { getAccessToken } from 'modules/auth/saga/authenticationSaga';
+import storeAPI from './store/store';
+
 // axios.defaults.params = axios.defaults.params || { culture: "en" }
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+axios.create({
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' })
+});
 axios.interceptors.request.use((_config) => {
   //   if (loggedIn() && !checkAuthenticate()) {
   //     return handleLogout()
@@ -61,4 +67,4 @@ export function getErrorMessage(error) {
   return message;
 }
 
-export const API = { accountAPI };
+export const API = { accountAPI, storeAPI };

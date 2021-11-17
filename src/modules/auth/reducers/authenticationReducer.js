@@ -1,5 +1,6 @@
-const { checkAuthenticate } = require('../saga/authenticationSaga');
 import { createSlice } from '@reduxjs/toolkit';
+
+const { checkAuthenticate } = require('../saga/authenticationSaga');
 
 const initialState = {
   isAuthenticated: checkAuthenticate(),
@@ -15,7 +16,7 @@ const authenticationSlice = createSlice({
       state.isFetching = true;
     },
     loginUserSuccess: (state) => {
-      state.isAuthenticated = false;
+      state.isAuthenticated = true;
       state.isFetching = true;
     },
     logoutUserSuccess: (state) => {
