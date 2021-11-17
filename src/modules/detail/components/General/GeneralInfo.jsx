@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 
@@ -6,7 +7,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 
 const { Meta } = Card;
 
-export default function GeneralInfo() {
+export default function GeneralInfo({ name, description }) {
   return (
     <Card
       style={{ width: '100%' }}
@@ -25,8 +26,8 @@ export default function GeneralInfo() {
       ]}>
       <Meta
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-        title="Tran Hong Quan"
-        description="This is the description"
+        title={name}
+        description={description || 'This is description'}
       />
     </Card>
   );

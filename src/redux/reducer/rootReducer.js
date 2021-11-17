@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import rootSaga from 'redux/saga/rootSaga';
 import { StoreReducer } from 'modules/list/reducers/listReducer';
+import { StoreDetailReducer } from 'modules/detail/reducers/detailReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,7 +15,8 @@ const store = configureStore({
   reducer: {
     app: AppReducer,
     auth: AuthenticationReducer,
-    list: StoreReducer
+    list: StoreReducer,
+    detail: StoreDetailReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, logger)

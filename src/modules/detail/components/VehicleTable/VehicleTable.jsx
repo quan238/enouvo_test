@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 
-const originData = [];
-
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    vehicleNumber: 32,
-    price: i
-  });
-}
-
 const EditableCell = function ({
   editing,
   dataIndex,
@@ -46,7 +35,7 @@ const EditableCell = function ({
   );
 };
 
-const VehicleTable = function () {
+const VehicleTable = function ({ data: originData }) {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');

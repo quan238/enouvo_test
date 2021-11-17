@@ -6,6 +6,7 @@ import { API_VERSION_1, API_VERSION_2, API_VERSION_NONE, BASE_URL } from './cons
 // import { getAccessToken } from '@/modules/authentication/saga/authenticationSaga';
 import accountAPI from './auth/auth';
 import storeAPI from './store/store';
+import storeDetailAPI from './detail/detail';
 
 // axios.defaults.params = axios.defaults.params || { culture: "en" }
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -67,4 +68,4 @@ export function getErrorMessage(error) {
   return message;
 }
 
-export const API = { accountAPI, storeAPI };
+export const API = { accountAPI, storeAPI, storeDetailAPI };
