@@ -1,5 +1,6 @@
-import React from "react";
+import DetailContainer from 'modules/detail/container/DetailContainer';
+import React from 'react';
 
 export default function DetailPage() {
-  return <div></div>;
+  return <DetailContainer />;
 }

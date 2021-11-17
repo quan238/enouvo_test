@@ -4,6 +4,7 @@ import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 import listAction from 'modules/list/actions/listAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { SORT } from 'utils/ENUM';
+import { history } from 'App/App';
 
 const EditableCell = function ({
   editing,
@@ -268,6 +269,15 @@ const ListTable = function () {
   return (
     <Form form={form} component={false}>
       <Table
+        style={{ padding: '55px' }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              const { id } = data[rowIndex];
+              history.push(`/vehicle/${id}`);
+            } // click row
+          };
+        }}
         rowSelection={rowSelection}
         components={{
           body: {
