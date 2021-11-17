@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
-import { all, call, put, takeLatest } from '@redux-saga/core/effects';
+import { all, call, fork, put, takeLatest } from '@redux-saga/core/effects';
 import { API } from 'apis';
 import { Message } from 'utils/Message';
 import { errorNotification, getError, successNotification } from 'utils/Notifcation';
@@ -8,6 +8,7 @@ import listDetailAction from '../actions/detailActions';
 import {
   fetchStoreDetailRequest,
   fetchStoreDetailSuccess,
+  updateStoreDetailError,
   updateStoreDetailRequest,
   updateStoreDetailSuccess
 } from '../reducers/detailReducer';
@@ -23,9 +24,13 @@ function* fetchDetailStore({ payload }) {
   }
 }
 
+function* shouldFetchDetailStore(storeId) {
+  yield fork(fetchDetailStore, { payload: { id: storeId } });
+}
+
 function* updateDetailStore({ payload }) {
+  const { id, data: oldData } = payload;
   try {
-    const { id, data: oldData } = payload;
     yield put(updateStoreDetailRequest());
     const updateData = oldData.map(({ slug, createdAt, updatedAt, ...rest }) => rest);
 
@@ -35,6 +40,8 @@ function* updateDetailStore({ payload }) {
 
     successNotification(Message.updateSuccess);
   } catch (error) {
+    yield put(updateStoreDetailError(error));
+    yield shouldFetchDetailStore(id);
     errorNotification(getError(error));
   }
 }

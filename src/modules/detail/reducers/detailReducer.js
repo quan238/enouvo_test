@@ -35,6 +35,10 @@ const storeDetailSlice = createSlice({
     },
     updateStoreDetailSuccess: (state) => {
       state.detail.isFetching = false;
+    },
+    updateStoreDetailError: (state, action) => {
+      state.detail.isFetching = false;
+      state.detail.error = action.payload;
     }
   }
 });
@@ -43,7 +47,8 @@ export const {
   fetchStoreDetailRequest,
   fetchStoreDetailSuccess,
   updateStoreDetailRequest,
-  updateStoreDetailSuccess
+  updateStoreDetailSuccess,
+  updateStoreDetailError
 } = storeDetailSlice.actions;
 
 export const StoreDetailReducer = storeDetailSlice.reducer;
