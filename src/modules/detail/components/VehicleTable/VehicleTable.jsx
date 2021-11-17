@@ -46,7 +46,7 @@ const VehicleTable = function ({ data: originData, loading }) {
     }
   }, [originData]);
 
-  const isEditing = (record) => record.key === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -55,7 +55,7 @@ const VehicleTable = function ({ data: originData, loading }) {
       price: '',
       ...record
     });
-    setEditingKey(record.key);
+    setEditingKey(record.id);
   };
 
   const cancel = () => {
@@ -66,7 +66,7 @@ const VehicleTable = function ({ data: originData, loading }) {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
+      const index = newData.findIndex((item) => key === item.id);
 
       if (index > -1) {
         const item = newData[index];
@@ -109,7 +109,7 @@ const VehicleTable = function ({ data: originData, loading }) {
           <span>
             <a
               href="javascript:;"
-              onClick={() => save(record.key)}
+              onClick={() => save(record.id)}
               style={{
                 marginRight: 8
               }}>
