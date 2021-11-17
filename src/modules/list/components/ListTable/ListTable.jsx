@@ -1,13 +1,13 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
+import { Table } from 'antd';
 import listAction from 'modules/list/actions/listAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { SORT } from 'utils/ENUM';
 import { history } from 'App/App';
 
 const ListTable = function () {
-  const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -172,26 +172,24 @@ const ListTable = function () {
   };
 
   return (
-    <Form form={form} component={false}>
-      <Table
-        style={{ padding: '55px' }}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              const { id } = data[rowIndex];
-              history.push(`/store/${id}`);
-            } // click row
-          };
-        }}
-        rowSelection={rowSelection}
-        bordered
-        dataSource={data}
-        columns={mergedColumns}
-        loading={isFetching}
-        pagination={{ ...tableChange.page, total }}
-        onChange={handleTableChange}
-      />
-    </Form>
+    <Table
+      style={{ padding: '55px', paddingBottom: '100px' }}
+      onRow={(record, rowIndex) => {
+        return {
+          onClick: (event) => {
+            const { id } = data[rowIndex];
+            history.push(`/store/${id}`);
+          } // click row
+        };
+      }}
+      rowSelection={rowSelection}
+      bordered
+      dataSource={data}
+      columns={mergedColumns}
+      loading={isFetching}
+      pagination={{ ...tableChange.page, total }}
+      onChange={handleTableChange}
+    />
   );
 };
 

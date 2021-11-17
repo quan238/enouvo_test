@@ -1,7 +1,8 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react/function-component-definition */
 import { Col, Row } from 'antd';
 import { useRouter } from 'hooks/useRouter';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import listDetailAction from '../actions/detailActions';
 import ContactInfo from '../components/ContactInfo/ContactInfo';
@@ -24,6 +25,7 @@ export default function DetailContainer() {
 
   useEffect(() => {
     onDispatchFetchDetailStore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

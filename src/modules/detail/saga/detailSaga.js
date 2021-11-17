@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-extraneous-dependencies */
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import { API } from 'apis';
 import { Message } from 'utils/Message';
@@ -27,7 +29,7 @@ function* updateDetailStore({ payload }) {
     yield put(updateStoreDetailRequest());
     const updateData = oldData.map(({ slug, createdAt, updatedAt, ...rest }) => rest);
 
-    const { data } = yield call(API.storeDetailAPI.updateStoreDetail, id, updateData);
+    yield call(API.storeDetailAPI.updateStoreDetail, id, updateData);
 
     yield put(updateStoreDetailSuccess());
 
