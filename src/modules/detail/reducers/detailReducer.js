@@ -38,7 +38,6 @@ const storeDetailSlice = createSlice({
     },
     updateStoreDetailError: (state, action) => {
       state.detail.isFetching = false;
-      state.detail.error = action.payload;
     }
   }
 });
