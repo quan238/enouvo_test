@@ -11,11 +11,12 @@ export const ContentStyled = styled(Content)`
 `;
 export const HeaderStyled = styled(Header)`
   background: #fff;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 24%);
+  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
   display: flex;
   justify-content: space-between;
-  height: 55px;
+  height: 65px;
   padding-left: 55px;
+
   padding-right: 25px !important;
 
   .iconHeader {

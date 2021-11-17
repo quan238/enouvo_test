@@ -29,10 +29,21 @@ const storeDetailSlice = createSlice({
       state.detail.phoneNumber = phoneNumber;
       state.detail.description = description;
       state.detail.vehicles = vehicles;
+    },
+    updateStoreDetailRequest: (state) => {
+      state.detail.isFetching = true;
+    },
+    updateStoreDetailSuccess: (state) => {
+      state.detail.isFetching = false;
     }
   }
 });
 
-export const { fetchStoreDetailRequest, fetchStoreDetailSuccess } = storeDetailSlice.actions;
+export const {
+  fetchStoreDetailRequest,
+  fetchStoreDetailSuccess,
+  updateStoreDetailRequest,
+  updateStoreDetailSuccess
+} = storeDetailSlice.actions;
 
 export const StoreDetailReducer = storeDetailSlice.reducer;

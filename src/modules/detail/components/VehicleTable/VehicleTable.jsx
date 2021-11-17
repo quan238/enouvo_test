@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
+import { useDispatch } from 'react-redux';
+import listDetailAction from 'modules/detail/actions/detailActions';
 
 const EditableCell = function ({
   editing,
@@ -35,10 +37,11 @@ const EditableCell = function ({
   );
 };
 
-const VehicleTable = function ({ data: originData, loading }) {
+const VehicleTable = function ({ data: originData, loading, storeId: id }) {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (originData.length !== 0) {
@@ -47,6 +50,13 @@ const VehicleTable = function ({ data: originData, loading }) {
   }, [originData]);
 
   const isEditing = (record) => record.id === editingKey;
+
+  const onDispatchUpdateDetail = (data) => {
+    dispatch({
+      type: listDetailAction.UPDATE_STORE_DETAIL,
+      payload: { data, id }
+    });
+  };
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -78,6 +88,8 @@ const VehicleTable = function ({ data: originData, loading }) {
         setData(newData);
         setEditingKey('');
       }
+
+      onDispatchUpdateDetail(newData);
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }

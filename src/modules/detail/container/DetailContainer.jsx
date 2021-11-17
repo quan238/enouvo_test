@@ -43,7 +43,7 @@ export default function DetailContainer() {
           </Row>
         </Col>
         <Col span={18} style={{ padding: '0 25px' }}>
-          <VehicleTable data={vehicles} loading={isFetching} />
+          <VehicleTable storeId={id} data={vehicles} loading={isFetching} />
         </Col>
       </Row>
     </div>
