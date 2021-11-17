@@ -434,3 +434,16 @@ button:focus {
     }
   }
 }
+
+.site-page-header {
+  padding: 0 !important;
+  .ant-breadcrumb {
+    padding: 0 !important;
+  }
+  .ant-page-header-heading {
+    margin-top: 0 !important ;
+    .ant-page-header-heading-left {
+      margin: 0;
+    }
+  }
+}

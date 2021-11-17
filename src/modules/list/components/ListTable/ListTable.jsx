@@ -47,7 +47,7 @@ const ListTable = function () {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [tableChange, setTableChange] = useState({
     page: 1,
-    orderBy: 'name',
+    orderBy: 'id',
     order: SORT.ASC
   });
 

@@ -1,21 +1,40 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/function-component-definition */
 import React from 'react';
 import { HeaderStyled } from 'stylesheet/Layout/Layout.styled';
-import { Input, AutoComplete, Breadcrumb, Row } from 'antd';
+import { Input, AutoComplete, PageHeader, Row } from 'antd';
 import { SearchingStyle } from 'stylesheet/Input/Input.styled';
 
 import { LogoutOutlined } from '@ant-design/icons';
 import { LOGOUT_USER } from 'modules/auth/actions/loginAction';
 import { history } from 'App/App';
 import { useDispatch } from 'react-redux';
-
-const styledIcon = {
-  fontSize: '25px',
-  padding: 'auto'
-  // marginLeft: "20px"
-};
+import { useRouter } from 'hooks/useRouter';
+import ROUTE_PATH from 'routes/routesPath';
 
 export default function Header() {
   const dispatch = useDispatch();
+
+  const {
+    pathname,
+    match: { path }
+  } = useRouter();
+
+  const pathArray = pathname.split('/').map((item, index) => {
+    if (item !== '' || index !== 0) {
+      return {
+        path: item,
+        breadcrumbName: item
+      };
+    }
+    return {
+      path: '/',
+      breadcrumbName: 'Home'
+    };
+  });
+
+  const route = ROUTE_PATH.filter((item) => item.path === path);
 
   const gotoLogin = () => {
     history.push('/login');
@@ -27,19 +46,16 @@ export default function Header() {
 
   return (
     <HeaderStyled>
-      <div>
-        <Row>
-          <Breadcrumb>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <a href="">Detail</a>
-            </Breadcrumb.Item>
-          </Breadcrumb>
-        </Row>
-        <Row>
-          <h1>Home</h1>
-        </Row>
-      </div>
+      <Row>
+        <PageHeader
+          onBack={pathname !== '/' ? () => history.goBack() : null}
+          className="site-page-header"
+          title={route[0].title}
+          breadcrumb={{ routes: pathArray }}
+          subTitle={route[0].subTitle}
+        />
+      </Row>
+
       <Row style={{ display: 'flex', alignItems: 'center' }}>
         <AutoComplete
           dropdownClassName="certain-category-search-dropdown"
